@@ -8,14 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HeadlineViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let client = APIClient()
-        client.getTopHeadlines { articles in
-            print(articles)
+        
+        APIClient.shared.getTopHeadlines { (result) in
+            switch result {
+            case let .success(articles):
+                print(articles)
+            case let .failure(error):
+                print(error)
+            }
         }
     }
 
