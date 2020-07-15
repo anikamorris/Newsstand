@@ -9,43 +9,38 @@
 import Foundation
 import UIKit
 
-protocol Section {
-    var numberOfItems: Int { get }
-    func layoutSection() -> NSCollectionLayoutSection
-    func configureCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
-}
-
 class TopicsViewController: UIViewController {
     var collectionView: UICollectionView!
-    var sections: [Section] = [TitleSection.init(title: "Newsstand")]
-//    let topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
-    
+    var sections: [Section] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
     }
     
-    func setUpTopicSection() {
-        let topicSection = TopicSection()
-//        topicSection.numberOfItems = topics.count
-//        topicSection.topics = self.topics
-        self.sections.append(topicSection)
-        print(self.sections)
-    }
     
     func setupCollectionView() {
-        setUpTopicSection()
+        self.sections.append(TopicSection())
         
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
-            return self.sections[sectionIndex].layoutSection()
-        }
+        let layout = UICollectionViewFlowLayout()
         collectionView = UICollectionView(frame: view.safeAreaLayoutGuide.layoutFrame, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.white
         collectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
-        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        
         self.view.addSubview(collectionView)
+        self.setCollectionViewConstraints(collectionView: collectionView)
+    }
+    
+    func setCollectionViewConstraints(collectionView: UICollectionView) {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view!.safeAreaLayoutGuide.topAnchor, constant: 12),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }
 
@@ -60,18 +55,27 @@ extension TopicsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
-        switch sections[indexPath.section] {
-        case is TopicSection:
-            let section = sections[indexPath.section] as! TopicSection
-            return section.configureCell(collectionView: collectionView, indexPath: indexPath)
-        case is TitleSection:
-            return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
-        default:
-            return UICollectionViewCell()
-        }
+
+        let section = sections[indexPath.section] as! TopicSection
+        return section.configureCell(collectionView: collectionView, indexPath: indexPath)
+
     }
 
 }
 
-extension TopicsViewController: UICollectionViewDelegate {}
+extension TopicsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let headlineVC = HeadlineViewController()
+        self.navigationController?.pushViewController(headlineVC, animated: true)
+    }
+}
+
+extension TopicsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let layout = collectionViewLayout as? UICollectionViewFlowLayout
+        let space: CGFloat = (layout?.minimumInteritemSpacing ?? 0.0) + (layout?.sectionInset.left ?? 0.0) + (layout?.sectionInset.right ?? 0.0)
+        let size:CGFloat = (collectionView.frame.size.width - space) / 2.0
+        return CGSize(width: size, height: size)
+    }
+}

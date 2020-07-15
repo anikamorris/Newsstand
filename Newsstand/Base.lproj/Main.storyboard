@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Topics View Controller-->
+        <!--Newsstand-->
         <scene sceneID="9lR-Co-pa7">
             <objects>
                 <viewController id="vp2-ko-oho" customClass="TopicsViewController" customModule="Newsstand" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="LHP-4f-NWN"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xmW-lg-ihh"/>
+                    <navigationItem key="navigationItem" title="Newsstand" id="xmW-lg-ihh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nfR-EM-fgM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

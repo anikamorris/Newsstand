@@ -11,13 +11,14 @@ import Foundation
 struct APIClient {
     static let shared = APIClient()
     let session = URLSession(configuration: .default)
-    let parameters = [
+    var parameters = [
            "country": "us"
     ]
     
-    func getTopHeadlines(_ completion: @escaping (Result<[Article]>) -> ()) {
+    mutating func getTopHeadlines(topic: String, _ completion: @escaping (Result<[Article]>) -> ()) {
         do {
           // Creating the request
+            self.parameters["q"] = topic
             let request = try Request.configureRequest(from: .topHeadlines, with: parameters, and: .get, contains: nil)
             session.dataTask(with: request) { (data, response, error) in
 

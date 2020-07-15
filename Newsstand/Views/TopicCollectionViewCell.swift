@@ -15,12 +15,15 @@ class TopicCollectionViewCell: UICollectionViewCell {
     let topicLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .cyan
+        contentView.layer.cornerRadius = 8
+        contentView.clipsToBounds = true
         setUpCell()
     }
     
