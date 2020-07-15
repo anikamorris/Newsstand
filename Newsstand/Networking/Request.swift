@@ -31,7 +31,7 @@ struct Request {
         
     static func configureRequest(from route: Route, with parameters: [String: Any], and method: HTTPMethod, contains body: Data?) throws -> URLRequest {
 
-        guard let url = URL(string: "https://newsapi.org/v2/\(route.rawValue)?country=us") else { fatalError("Error while unwrapping url")}
+        guard let url = URL(string: "https://newsapi.org/v2/\(route.rawValue)") else { fatalError("Error while unwrapping url")}
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         request.httpMethod = method.rawValue
         request.httpBody = body
