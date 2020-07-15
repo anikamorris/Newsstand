@@ -17,8 +17,36 @@ protocol Section {
 
 class TopicsViewController: UIViewController {
     var collectionView: UICollectionView!
-    var sections: [Section] = []
+    var sections: [Section] = [TitleSection.init(title: "Newsstand")]
     let topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollectionView()
+    }
+    
+    func setUpTopicSection() {
+        var topicSection = TopicSection()
+        topicSection.numberOfItems = topics.count
+        topicSection.topics = self.topics
+        self.sections.append(topicSection)
+        print(self.sections)
+    }
+    
+    func setupCollectionView() {
+        setUpTopicSection()
+        
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
+            return self.sections[sectionIndex].layoutSection()
+        }
+        collectionView = UICollectionView(frame: view.safeAreaLayoutGuide.layoutFrame, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.white
+        collectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
+        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        self.view.addSubview(collectionView)
+    }
 }
 
 extension TopicsViewController: UICollectionViewDataSource {
@@ -26,8 +54,12 @@ extension TopicsViewController: UICollectionViewDataSource {
         sections[section].numberOfItems
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
     }
 }
 
