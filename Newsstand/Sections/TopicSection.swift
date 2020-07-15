@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 struct TopicSection: Section {
-    var numberOfItems: Int = 0
-    var topics: [String]!
+    var numberOfItems: Int = 7
+    var topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
     
     func layoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .fractionalHeight(0.3))
@@ -19,10 +19,10 @@ struct TopicSection: Section {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 7)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
+        
         return section
     }
     

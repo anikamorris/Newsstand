@@ -18,7 +18,7 @@ protocol Section {
 class TopicsViewController: UIViewController {
     var collectionView: UICollectionView!
     var sections: [Section] = [TitleSection.init(title: "Newsstand")]
-    let topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
+//    let topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +26,9 @@ class TopicsViewController: UIViewController {
     }
     
     func setUpTopicSection() {
-        var topicSection = TopicSection()
-        topicSection.numberOfItems = topics.count
-        topicSection.topics = self.topics
+        let topicSection = TopicSection()
+//        topicSection.numberOfItems = topics.count
+//        topicSection.topics = self.topics
         self.sections.append(topicSection)
         print(self.sections)
     }
@@ -51,16 +51,27 @@ class TopicsViewController: UIViewController {
 
 extension TopicsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        sections[section].numberOfItems
+        return sections[section].numberOfItems
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        print(sections.count)
+        return sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
+//        return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
+        switch sections[indexPath.section] {
+        case is TopicSection:
+            let section = sections[indexPath.section] as! TopicSection
+            return section.configureCell(collectionView: collectionView, indexPath: indexPath)
+        case is TitleSection:
+            return sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
+        default:
+            return UICollectionViewCell()
+        }
     }
+
 }
 
 extension TopicsViewController: UICollectionViewDelegate {}
