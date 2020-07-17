@@ -12,6 +12,7 @@ import UIKit
 class TopicsViewController: UIViewController {
     var collectionView: UICollectionView!
     var sections: [Section] = []
+    var topics: [String] = ["business", "politics", "health", "science", "tech", "sports", "entertainment"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,7 @@ extension TopicsViewController: UICollectionViewDataSource {
 extension TopicsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let headlineVC = HeadlineViewController()
+        headlineVC.topic = self.topics[indexPath.row]
         self.navigationController?.pushViewController(headlineVC, animated: true)
     }
 }

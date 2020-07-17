@@ -21,14 +21,14 @@ class TopicCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .cyan
+        contentView.backgroundColor = .lightGray
         contentView.layer.cornerRadius = 8
         contentView.clipsToBounds = true
         setUpCell()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     func setUpCell() {
@@ -42,7 +42,7 @@ class TopicCollectionViewCell: UICollectionViewCell {
     }
     
     func set(topic: String) {
-        topicLabel.text = topic
+        topicLabel.text = topic.capitalized
     }
 
 }

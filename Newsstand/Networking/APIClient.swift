@@ -9,17 +9,17 @@
 import Foundation
 
 struct APIClient {
-    static let shared = APIClient()
     let session = URLSession(configuration: .default)
     var parameters = [
-           "country": "us"
+           "sortBy": "publishedAt"
     ]
     
-    mutating func getTopHeadlines(topic: String, _ completion: @escaping (Result<[Article]>) -> ()) {
+    func getHeadlines(for topic: String, _ completion: @escaping (Result<[Article]>) -> ()) {
         do {
           // Creating the request
-            self.parameters["q"] = topic
-            let request = try Request.configureRequest(from: .topHeadlines, with: parameters, and: .get, contains: nil)
+            var params = self.parameters
+            params["q"] = topic
+            let request = try Request.configureRequest(from: .everything, with: params, and: .get, contains: nil)
             session.dataTask(with: request) { (data, response, error) in
 
                 if let response = response as? HTTPURLResponse, let data = data {

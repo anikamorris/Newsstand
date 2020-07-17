@@ -24,6 +24,7 @@
 		CF4E707C24BEDC59003B6D91 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E707B24BEDC59003B6D91 /* ArticleViewController.swift */; };
 		CF4E707F24BF7FB2003B6D91 /* TopicSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E707E24BF7FB0003B6D91 /* TopicSection.swift */; };
 		CF4E708424BF80FF003B6D91 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E708224BF80FE003B6D91 /* TopicCollectionViewCell.swift */; };
+		CFF276B224C0F09C0095BE4C /* HeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF276B124C0F09B0095BE4C /* HeadlineTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		CF4E707B24BEDC59003B6D91 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		CF4E707E24BF7FB0003B6D91 /* TopicSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSection.swift; sourceTree = "<group>"; };
 		CF4E708224BF80FE003B6D91 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
+		CFF276B124C0F09B0095BE4C /* HeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				CF4E708224BF80FE003B6D91 /* TopicCollectionViewCell.swift */,
+				CFF276B124C0F09B0095BE4C /* HeadlineTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				CF4E707024BCCC1B003B6D91 /* Encoder.swift in Sources */,
 				CF4E704624B82E65003B6D91 /* AppDelegate.swift in Sources */,
 				CF4E707A24BEDC42003B6D91 /* TopicsViewController.swift in Sources */,
+				CFF276B224C0F09C0095BE4C /* HeadlineTableViewCell.swift in Sources */,
 				CF4E707824BCDC12003B6D91 /* Article.swift in Sources */,
 				CF4E707224BCCC59003B6D91 /* Request.swift in Sources */,
 				CF4E708424BF80FF003B6D91 /* TopicCollectionViewCell.swift in Sources */,

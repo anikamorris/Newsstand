@@ -23,6 +23,5 @@ struct TopicSection: Section {
         cell.set(topic: topics[indexPath.row])
         return cell
     }
-    
-    
+
 }
