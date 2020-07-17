@@ -22,6 +22,7 @@ class HeadlineTableViewCell: UITableViewCell {
     
     private static func makeLabel() -> UILabel {
         let label = UILabel()
+        label.text = "Loading..."
         
         label.translatesAutoresizingMaskIntoConstraints = false
         

@@ -11,7 +11,8 @@ import Foundation
 struct APIClient {
     let session = URLSession(configuration: .default)
     var parameters = [
-           "sortBy": "publishedAt"
+           "sortBy": "publishedAt",
+           "language": "en"
     ]
     
     func getHeadlines(for topic: String, _ completion: @escaping (Result<[Article]>) -> ()) {

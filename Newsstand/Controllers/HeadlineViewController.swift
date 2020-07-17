@@ -11,35 +11,68 @@ import UIKit
 class HeadlineViewController: UIViewController {
     
     var topic: String!
-    var headlines: [String] = []
+    var headlines: [String] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(HeadlineTableViewCell.self, forCellReuseIdentifier: HeadlineTableViewCell.identifier)
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupTableView()
         self.title = topic.capitalized
         let client = APIClient()
-        client.getHeadlines(for: self.topic) { [weak self](result) in
+        client.getHeadlines(for: self.topic) { (result) in
             switch result {
             case let .success(articles):
-                guard let self = self else { return }
                 for article in articles {
                     if let headline = article.title {
                         self.headlines.append(headline)
                     }
                 }
-                print(self.headlines)
             case let .failure(error):
                 print(error)
             }
         }
     }
 
-
+    func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
 }
 
+
+
+extension HeadlineViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return headlines.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeadlineTableViewCell.identifier, for: indexPath) as! HeadlineTableViewCell
+        cell.headlineLabel.text = headlines[indexPath.row]
+        return cell
+    }
+}
+
+extension HeadlineViewController: UITableViewDelegate {
+    
+}

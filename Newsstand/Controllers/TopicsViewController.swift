@@ -70,6 +70,7 @@ extension TopicsViewController: UICollectionViewDelegate {
         headlineVC.topic = self.topics[indexPath.row]
         self.navigationController?.pushViewController(headlineVC, animated: true)
     }
+    
 }
 
 extension TopicsViewController: UICollectionViewDelegateFlowLayout {
