@@ -11,7 +11,7 @@ import UIKit
 class HeadlineViewController: UIViewController {
     
     var topic: String!
-    var headlines: [String] = [] {
+    var articles: [Article] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -32,13 +32,11 @@ class HeadlineViewController: UIViewController {
         setupTableView()
         self.title = topic.capitalized
         let client = APIClient()
-        client.getHeadlines(for: self.topic) { (result) in
+        client.getHeadlines(for: self.topic) { result in
             switch result {
             case let .success(articles):
                 for article in articles {
-                    if let headline = article.title {
-                        self.headlines.append(headline)
-                    }
+                    self.articles.append(article)
                 }
             case let .failure(error):
                 print(error)
@@ -63,16 +61,27 @@ class HeadlineViewController: UIViewController {
 
 extension HeadlineViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return headlines.count
+        return articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HeadlineTableViewCell.identifier, for: indexPath) as! HeadlineTableViewCell
-        cell.headlineLabel.text = headlines[indexPath.row]
+        let article = articles[indexPath.row]
+        if let title = article.title {
+            cell.headlineLabel.text = title
+        }
+        if let imageURL = article.urlToImage {
+            cell.headlineImageURL = imageURL
+        }
+        
         return cell
     }
 }
 
 extension HeadlineViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let articleVC = ArticleViewController()
+        articleVC.article = articles[indexPath.row]
+        self.navigationController?.pushViewController(articleVC, animated: true)
+    }
 }

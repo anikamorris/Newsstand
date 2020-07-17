@@ -11,4 +11,9 @@ import UIKit
 
 class ArticleViewController: UIViewController {
     var article: Article!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = self.article.title
+    }
 }
